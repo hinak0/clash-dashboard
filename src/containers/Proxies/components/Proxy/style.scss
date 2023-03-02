@@ -34,6 +34,15 @@
     }
 }
 
+// dark mode
+html[theme="dark-mode"] {
+    .proxy-item {
+        .rounded-sm {
+            filter: invert(1) hue-rotate(0.5turn);
+        }
+    }
+}
+
 @media (max-width: 768px) {
     .proxy-item {
         $height: 70px;

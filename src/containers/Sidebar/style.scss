@@ -45,7 +45,11 @@
         }
 
         > a.active {
-            background: linear-gradient(135deg, $color-primary, $color-primary-dark);
+            background: linear-gradient(
+                135deg,
+                $color-primary,
+                $color-primary-dark
+            );
             color: $color-white;
             box-shadow: 0 2px 8px rgba($color: $color-primary-dark, $alpha: 0.5);
         }
@@ -115,7 +119,15 @@
         }
     }
 
+    .darkmode-button {
+        display: none;
+    }
+
     .sidebar-version {
         display: none;
     }
+}
+
+.darkmode-button {
+    margin-bottom: 20px;
 }

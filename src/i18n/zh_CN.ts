@@ -7,6 +7,7 @@ const CN = {
         Settings: '设置',
         Connections: '连接',
         Version: '版本',
+        DarkMode: '黑暗模式',
     },
     Settings: {
         title: '设置',

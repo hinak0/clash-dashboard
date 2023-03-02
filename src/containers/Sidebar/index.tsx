@@ -2,8 +2,9 @@ import classnames from 'classnames'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import logo from '@assets/logo.png'
+import { Checkbox } from '@components'
 import { type Lang, type Language } from '@i18n'
-import { useI18n, useVersion, useClashXData } from '@stores'
+import { useClashXData, useConfig, useI18n, useVersion } from '@stores'
 import './style.scss'
 
 interface SidebarProps {
@@ -21,6 +22,7 @@ export default function Sidebar (props: SidebarProps) {
     const { data } = useClashXData()
     const { t } = translation('SideBar')
     const location = useLocation()
+    const { data: config, set: setConfig } = useConfig()
 
     const navlinks = routes.map(
         ({ path, name, noMobile }) => (
@@ -32,12 +34,34 @@ export default function Sidebar (props: SidebarProps) {
         ),
     )
 
+    const changeDarkMode = (v: boolean) => {
+        setConfig('darkmode', v)
+        if (v) {
+            document.documentElement.setAttribute('theme', 'dark-mode')
+        } else {
+            document.documentElement.removeAttribute('theme')
+        }
+    }
+
+    // init the theme
+    if (config.darkmode) {
+        document.documentElement.setAttribute('theme', 'dark-mode')
+    }
+
     return (
         <div className="sidebar">
             <img src={logo} alt="logo" className="sidebar-logo" />
             <ul className="sidebar-menu">
                 { navlinks }
             </ul>
+            <div className="darkmode-button">
+                <Checkbox
+                    className="cursor-pointer text-sm text-primary-600 text-shadow-primary"
+                    checked={config.darkmode}
+                    onChange={value => changeDarkMode(value)}>
+                    {t('DarkMode')}
+                </Checkbox>
+            </div>
             <div className="sidebar-version">
                 <span className="sidebar-version-label">Clash{ data?.isClashX && 'X' } { t('Version') }</span>
                 <span className="sidebar-version-text">{ version }</span>

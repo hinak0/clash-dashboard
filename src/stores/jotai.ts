@@ -10,7 +10,7 @@ import { useCallback, useEffect, useMemo, useRef } from 'react'
 import useSWR from 'swr'
 import { type Get } from 'type-fest'
 
-import { Language, locales, type Lang, getDefaultLanguage, type LocalizedType } from '@i18n'
+import { getDefaultLanguage, Language, locales, type Lang, type LocalizedType } from '@i18n'
 import { partition } from '@lib/helper'
 import { useWarpImmerSetter, type WritableDraft } from '@lib/jotai'
 import { isClashX, jsBridge } from '@lib/jsBridge'
@@ -86,6 +86,7 @@ export function useRuleProviders () {
 }
 
 export const configAtom = atomWithStorage('profile', {
+    darkmode: false,
     breakConnections: false,
     logLevel: '',
 })
