@@ -17,15 +17,18 @@ html {
 html[theme="dark-mode"] {
     filter: invert(1) hue-rotate(180deg);
 
-   // prevent images from color inversion
+    // prevent images from color inversion
     img {
-          filter: invert(1) hue-rotate(0.5turn);
+        filter: invert(1) hue-rotate(0.5turn);
     }
 
-   // disable shadow
+    // disable shadow
     * {
         box-shadow: none;
     }
+
+    // make text stand out
+    font-weight: 800;
 }
 
 body {
