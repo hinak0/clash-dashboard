@@ -5,21 +5,28 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
     - name: Checkout Dashboard code
       uses: actions/checkout@v3
+
     - uses: pnpm/action-setup@v2
       with:
         version: latest
+
     - name: Setup Nodejs
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
         cache: pnpm
+
     - name: Install package and build
       run: |
         pnpm install --frozen-lockfile
         pnpm build
+
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
