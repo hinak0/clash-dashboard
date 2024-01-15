@@ -87,11 +87,22 @@ export default function Connections () {
             original: c,
         }),
     ), [connections])
+    // translate ip address string to a integer
+    const transIpToBit = (ipAddr: string) => {
+        return ipAddr.split('.').reduce((p, c) => {
+            p = p << 8
+            console.log(p)
+            return p + parseInt(c)
+        }, 0)
+    }
     const devices = useMemo(() => {
         const gb = groupBy(connections, 'metadata.sourceIP')
         return Object.keys(gb)
-            .map(key => ({ label: key, number: gb[key].length }))
-            .sort((a, b) => a.label.localeCompare(b.label))
+            .map(key => ({ label: key, number: gb[key].length, bit: transIpToBit(key) }))
+            .sort((a, b) => {
+                console.log(a)
+                return a.bit - b.bit
+            })
     }, [connections])
 
     // table
