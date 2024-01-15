@@ -1,10 +1,10 @@
-import { useIntersectionObserver, useSyncedRef, useUnmountEffect } from '@react-hookz/web'
-import { useReactTable, getSortedRowModel, getFilteredRowModel, getCoreRowModel, flexRender, createColumnHelper } from '@tanstack/react-table'
+import { useIntersectionObserver, useSyncedRef } from '@react-hookz/web'
+import { createColumnHelper, flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table'
 import classnames from 'classnames'
 import { groupBy } from 'lodash-es'
-import { useMemo, useLayoutEffect, useRef, useState, useEffect } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
-import { Header, Checkbox, Modal, Icon, Drawer, Card, Button } from '@components'
+import { Button, Card, Checkbox, Drawer, Header, Icon, Modal } from '@components'
 import { fromNow } from '@lib/date'
 import { basePath, formatTraffic } from '@lib/helper'
 import { useObject, useVisible } from '@lib/hook'
@@ -13,7 +13,7 @@ import { useClient, useConnectionStreamReader, useI18n } from '@stores'
 
 import { Devices } from './Devices'
 import { ConnectionInfo } from './Info'
-import { type Connection, type FormatConnection, useConnections } from './store'
+import { useConnections, type Connection, type FormatConnection } from './store'
 import './style.scss'
 
 const Columns = {
@@ -51,7 +51,6 @@ export default function Connections () {
     const { translation, lang } = useI18n()
     const t = useMemo(() => translation('Connections').t, [translation])
     const connStreamReader = useConnectionStreamReader()
-    const readerRef = useSyncedRef(connStreamReader)
     const client = useClient()
     const cardRef = useRef<HTMLDivElement>(null)
 
@@ -91,7 +90,6 @@ export default function Connections () {
     const transIpToBit = (ipAddr: string) => {
         return ipAddr.split('.').reduce((p, c) => {
             p = p << 8
-            console.log(p)
             return p + parseInt(c)
         }, 0)
     }
@@ -100,7 +98,6 @@ export default function Connections () {
         return Object.keys(gb)
             .map(key => ({ label: key, number: gb[key].length, bit: transIpToBit(key) }))
             .sort((a, b) => {
-                console.log(a)
                 return a.bit - b.bit
             })
     }, [connections])
@@ -168,9 +165,6 @@ export default function Connections () {
             connStreamReader?.unsubscribe('data', handleConnection)
         }
     }, [connStreamReader, feed, setTraffic])
-    useUnmountEffect(() => {
-        readerRef.current?.destory()
-    })
 
     const instance = useReactTable({
         data,

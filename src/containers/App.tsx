@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import { Route, Navigate, Routes, useLocation, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 
 // import Overview from '@containers/Overview'
 import Connections from '@containers/Connections'
@@ -24,8 +24,8 @@ export default function App () {
     // { path: '/', name: 'Overview', component: Overview, exact: true },
         { path: '/proxies', name: 'Proxies', element: <Proxies /> },
         { path: '/logs', name: 'Logs', element: <Logs /> },
-        { path: '/rules', name: 'Rules', element: <Rules />, noMobile: true },
-        { path: '/connections', name: 'Connections', element: <Connections />, noMobile: true },
+        { path: '/rules', name: 'Rules', element: <Rules /> },
+        { path: '/connections', name: 'Connections', element: <Connections /> },
         { path: '/settings', name: 'Settings', element: <Settings /> },
     ]
 
