@@ -75,6 +75,5 @@
         "react-window": "^1.8.10",
         "swr": "^2.2.4",
         "use-immer": "^0.8.1"
-    },
-    "packageManager": "pnpm@8.15.4"
+    }
 }
