@@ -1,5 +1,5 @@
 extends:
-  - standard-with-typescript
+  - eslint-config-love
   - airbnb/hooks
   - plugin:@typescript-eslint/recommended
   - '@unocss'

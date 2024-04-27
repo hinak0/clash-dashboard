@@ -27,7 +27,8 @@ export const hostsStorageAtom = atomWithStorage<Array<{
     hostname: string
     port: string
     secret: string
-}>>('externalControllers', JSON.parse(hostsStorageOrigin))
+}>>('externalControllers', JSON.parse(hostsStorageOrigin) as Array<{ hostname: string, port: string, secret: string }>)
+
 export const hostSelectIdxStorageAtom = atomWithStorage<number>('externalControllerIndex', parseInt(hostSelectIdxStorageOrigin))
 
 export function useAPIInfo () {
@@ -41,12 +42,10 @@ export function useAPIInfo () {
     }
 
     let url: URL | undefined
-    {
-        const meta = document.querySelector<HTMLMetaElement>('meta[name="external-controller"]')
-        if ((meta?.content?.match(/^https?:/)) != null) {
-            // [protocol]://[secret]@[hostname]:[port]
-            url = new URL(meta.content)
-        }
+    const meta = document.querySelector<HTMLMetaElement>('meta[name="external-controller"]')
+    if ((meta?.content?.match(/^https?:/)) != null) {
+        // [protocol]://[secret]@[hostname]:[port]
+        url = new URL(meta.content)
     }
 
     const qs = new URLSearchParams(location.search)

@@ -36,10 +36,10 @@ export class StreamReader<T> {
 
         this.connection = new WebSocket(url.toString())
         this.connection.addEventListener('message', msg => {
-            const data = JSON.parse(msg.data)
+            const data = JSON.parse(msg.data as string)
             this.EE.emit('data', [data])
             if (this.config.bufferLength > 0) {
-                this.innerBuffer.push(data)
+                this.innerBuffer.push(data as T)
                 if (this.innerBuffer.length > this.config.bufferLength) {
                     this.innerBuffer.splice(0, this.innerBuffer.length - this.config.bufferLength)
                 }
@@ -49,7 +49,7 @@ export class StreamReader<T> {
         this.connection.addEventListener('error', err => {
             this.EE.emit('error', err)
             this.connection?.close()
-            setTimeout(this.connectWebsocket, this.config.retryInterval)
+            setTimeout(this.connectWebsocket.bind(this), this.config.retryInterval)
         })
     }
 

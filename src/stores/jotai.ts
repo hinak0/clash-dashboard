@@ -86,7 +86,7 @@ export function useRuleProviders () {
 }
 
 export const configAtom = atomWithStorage('profile', {
-    darkmode: false,
+    darkmode: true,
     breakConnections: false,
     logLevel: '',
 })

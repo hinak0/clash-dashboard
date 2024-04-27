@@ -26,10 +26,11 @@ export const locales = Object.keys(Language)
 
 export function getDefaultLanguage (): Lang {
     for (const language of window.navigator.languages) {
+        if (language.includes('en')) {
+            return 'en_US'
+        }
         if (language.includes('zh')) {
             return 'zh_CN'
-        } else if (language.includes('us')) {
-            return 'en_US'
         }
     }
 
